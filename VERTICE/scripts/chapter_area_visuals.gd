@@ -893,61 +893,180 @@ func _draw_architectural_details() -> void:
 			draw_arc(Vector2(850, 345), 58.0, 0.0, TAU, 64, Color(0.92, 0.72, 0.43, 0.18), 1.5)
 
 func _draw_stone_surface(points: PackedVector2Array, tint: Color) -> void:
-    var texture: Texture2D = TextureFactory2D.tex_carved_stone
-    if texture == null or points.size() < 3:
-        draw_colored_polygon(points, tint)
+    if points.size() < 3:
         return
 
-    var min_x := points[0].x
-    var max_x := points[0].x
-    var min_y := points[0].y
-    var max_y := points[0].y
+    var texture: Texture2D = TextureFactory2D.tex_carved_stone
 
-    for p in points:
-        min_x = minf(min_x, p.x)
-        max_x = maxf(max_x, p.x)
-        min_y = minf(min_y, p.y)
-        max_y = maxf(max_y, p.y)
+    if texture == null:
+        draw_colored_polygon(points, tint)
+    else:
+        var min_x := points[0].x
+        var max_x := points[0].x
+        var min_y := points[0].y
+        var max_y := points[0].y
 
-    var uv := PackedVector2Array()
-    var colors := PackedColorArray()
-    var w := maxf(max_x - min_x, 1.0)
-    var h := maxf(max_y - min_y, 1.0)
+        for point in points:
+            min_x = minf(min_x, point.x)
+            max_x = maxf(max_x, point.x)
+            min_y = minf(min_y, point.y)
+            max_y = maxf(max_y, point.y)
 
-    for p in points:
-        uv.append(Vector2((p.x - min_x) / w, (p.y - min_y) / h))
-        colors.append(tint)
+        var uv := PackedVector2Array()
+        var colors := PackedColorArray()
+        var w := maxf(max_x - min_x, 1.0)
+        var h := maxf(max_y - min_y, 1.0)
 
-    draw_polygon(points, colors, uv, texture)
+        for point in points:
+            uv.append(Vector2((point.x - min_x) / w, (point.y - min_y) / h))
+            colors.append(tint)
+
+        draw_polygon(points, colors, uv, texture)
+
+    var center := Vector2.ZERO
+    for point in points:
+        center += point
+    center /= float(points.size())
+
+    var outline := PackedVector2Array(points)
+    outline.append(points[0])
+
+    draw_polyline(
+        outline,
+        Color(0.035, 0.045, 0.052, 0.82),
+        3.5,
+        true
+    )
+
+    var bevel := PackedVector2Array()
+    for point in points:
+        bevel.append(point.lerp(center, 0.045))
+    bevel.append(bevel[0])
+
+    draw_polyline(
+        bevel,
+        Color(0.78, 0.84, 0.83, 0.27),
+        1.8,
+        true
+    )
+
+    for i in range(mini(points.size(), 3)):
+        var origin := points[i]
+        var direction := center - origin
+        var side := Vector2(-direction.y, direction.x).normalized()
+
+        var crack := PackedVector2Array([
+            origin.lerp(center, 0.20),
+            origin.lerp(center, 0.37) + side * 5.0,
+            origin.lerp(center, 0.52) - side * 3.0,
+            origin.lerp(center, 0.72) + side * 2.0
+        ])
+
+        draw_polyline(
+            crack,
+            Color(0.035, 0.043, 0.048, 0.82),
+            2.2,
+            true
+        )
+
+        draw_line(
+            crack[0] + Vector2(-1.0, -1.0),
+            crack[2] + Vector2(-1.0, -1.0),
+            Color(0.78, 0.82, 0.78, 0.24),
+            1.0,
+            true
+        )
+
 
 func _draw_metal_surface(points: PackedVector2Array, tint: Color) -> void:
-    var texture: Texture2D = TextureFactory2D.tex_oxidized_metal
-    if texture == null or points.size() < 3:
-        draw_colored_polygon(points, tint)
+    if points.size() < 3:
         return
 
-    var min_x := points[0].x
-    var max_x := points[0].x
-    var min_y := points[0].y
-    var max_y := points[0].y
+    var texture: Texture2D = TextureFactory2D.tex_oxidized_metal
 
+    if texture == null:
+        draw_colored_polygon(points, tint)
+    else:
+        var min_x := points[0].x
+        var max_x := points[0].x
+        var min_y := points[0].y
+        var max_y := points[0].y
+
+        for point in points:
+            min_x = minf(min_x, point.x)
+            max_x = maxf(max_x, point.x)
+            min_y = minf(min_y, point.y)
+            max_y = maxf(max_y, point.y)
+
+        var size_x := maxf(max_x - min_x, 1.0)
+        var size_y := maxf(max_y - min_y, 1.0)
+        var uvs := PackedVector2Array()
+        var colors := PackedColorArray()
+
+        for point in points:
+            uvs.append(Vector2(
+                (point.x - min_x) / size_x,
+                (point.y - min_y) / size_y
+            ))
+            colors.append(tint)
+
+        draw_polygon(points, colors, uvs, texture)
+
+    var center := Vector2.ZERO
     for point in points:
-        min_x = minf(min_x, point.x)
-        max_x = maxf(max_x, point.x)
-        min_y = minf(min_y, point.y)
-        max_y = maxf(max_y, point.y)
+        center += point
+    center /= float(points.size())
 
-    var size_x := maxf(max_x - min_x, 1.0)
-    var size_y := maxf(max_y - min_y, 1.0)
-    var uvs := PackedVector2Array()
-    var colors := PackedColorArray()
+    var outline := PackedVector2Array(points)
+    outline.append(points[0])
 
+    draw_polyline(
+        outline,
+        Color(0.025, 0.035, 0.040, 0.88),
+        3.0,
+        true
+    )
+
+    var bevel := PackedVector2Array()
     for point in points:
-        uvs.append(Vector2(
-            (point.x - min_x) / size_x,
-            (point.y - min_y) / size_y
-        ))
-        colors.append(tint)
+        bevel.append(point.lerp(center, 0.055))
+    bevel.append(bevel[0])
 
-    draw_polygon(points, colors, uvs, texture)
-\n
+    draw_polyline(
+        bevel,
+        Color(0.86, 0.91, 0.88, 0.32),
+        1.6,
+        true
+    )
+
+    for i in range(points.size()):
+        var a := points[i]
+        var b := points[(i + 1) % points.size()]
+        var bolt := a.lerp(b, 0.5)
+
+        draw_circle(bolt, 3.2, Color(0.035, 0.043, 0.045, 0.88))
+        draw_circle(bolt, 1.65, Color(0.72, 0.77, 0.73, 0.78))
+        draw_circle(
+            bolt + Vector2(-0.6, -0.7),
+            0.65,
+            Color(0.96, 0.97, 0.88, 0.72)
+        )
+
+        if i < 4:
+            var scratch_start := a.lerp(center, 0.25)
+            var scratch_end := a.lerp(center, 0.48)
+
+            draw_line(
+                scratch_start,
+                scratch_end,
+                Color(0.88, 0.91, 0.86, 0.25),
+                1.3,
+                true
+            )
+
+            var rust_point := a.lerp(center, 0.58)
+            draw_circle(
+                rust_point,
+                2.0,
+                Color(0.48, 0.25, 0.13, 0.38)
+            )
