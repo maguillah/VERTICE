@@ -28,3 +28,23 @@ position = Vector2(0, -64)
 color = Color(0.96, 0.62, 0.22, 1)
 energy = 0.5
 texture_scale = 3.2
+
+
+[node name="SigilFrame" type="Line2D" parent="."]
+position = Vector2(0, -64)
+z_index = 2
+points = PackedVector2Array(-13, 0, -10, -12, 0, -19, 10, -12, 13, 0, 0, 8, -13, 0)
+width = 2.0
+default_color = Color(0.71, 0.54, 0.32, 0.9)
+
+[node name="BaseOrnament" type="Polygon2D" parent="."]
+z_index = 1
+color = Color(0.25, 0.31, 0.35, 1)
+polygon = PackedVector2Array(-22, 0, -17, -8, 17, -8, 22, 0, 15, 5, -15, 5)
+
+[node name="InnerSigil" type="Line2D" parent="."]
+position = Vector2(0, -64)
+z_index = 3
+points = PackedVector2Array(0, -11, 9, 0, 0, 11, -9, 0, 0, -11)
+width = 1.5
+default_color = Color(0.45, 0.72, 0.73, 0.85)

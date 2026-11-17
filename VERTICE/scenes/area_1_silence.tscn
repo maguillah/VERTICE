@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
 [ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="2_cp"]
 [ext_resource type="Script" path="res://scripts/resonance_object.gd" id="3_ro"]
-[ext_resource type="Script" path="res://scripts/area1_visuals.gd" id="4_visuals"]
+[ext_resource type="Script" path="res://scripts/chapter_area_visuals.gd" id="4_visuals"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trig1"]
 size = Vector2(80, 640)
@@ -22,6 +22,7 @@ size = Vector2(430, 290)
 [node name="Area1Visuals" type="Node2D" parent="."]
 z_index = -5
 script = ExtResource("4_visuals")
+area_id = 1
 
 [node name="AreaTrigger" type="Area2D" parent="."]
 position = Vector2(120, 320)

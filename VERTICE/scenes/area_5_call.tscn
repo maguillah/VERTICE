@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
 [ext_resource type="PackedScene" path="res://scenes/resonance_node.tscn" id="2_rn"]
 [ext_resource type="PackedScene" path="res://scenes/echo_memory.tscn" id="3_em"]
 [ext_resource type="Script" path="res://scripts/resonance_object.gd" id="4_ro"]
 
+[ext_resource type="Script" path="res://scripts/chapter_area_visuals.gd" id="chapter_visuals"]
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trig5"]
 size = Vector2(80, 720)
 
@@ -18,6 +19,11 @@ size = Vector2(240, 200)
 size = Vector2(760, 220)
 
 [node name="Area5_Call" type="Node2D"]
+
+[node name="ChapterVisuals" type="Node2D" parent="."]
+z_index = -10
+script = ExtResource("chapter_visuals")
+area_id = 5
 
 [node name="AreaTrigger" type="Area2D" parent="."]
 position = Vector2(80, 320)
