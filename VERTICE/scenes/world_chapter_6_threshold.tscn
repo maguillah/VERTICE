@@ -28,7 +28,7 @@ initial_velocity_max = 22.0
 environment = ExtResource("1_env")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.95, 0.95, 0.98, 1)
+color = Color(1, 1, 1, 1)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -40,7 +40,7 @@ offset_left = -800.0
 offset_top = -600.0
 offset_right = 9200.0
 offset_bottom = 1200.0
-color = Color(0.028, 0.032, 0.048, 1)
+color = Color(0.13, 0.16, 0.22, 1)
 
 [node name="FinalLightColumn" type="ColorRect" parent="ParallaxBackground/FarAtmosphere"]
 offset_left = 1800.0
@@ -53,7 +53,7 @@ color = Color(0.95, 0.72, 0.36, 0.08)
 motion_scale = Vector2(0.45, 0.25)
 
 [node name="ShatteredBridge" type="Polygon2D" parent="ParallaxBackground/MidArchitecture"]
-color = Color(0.058, 0.066, 0.088, 0.9)
+color = Color(0.151, 0.172, 0.229, 0.9)
 polygon = PackedVector2Array(900, 80, 1750, 40, 1750, 96, 900, 130)
 
 [node name="FogLayer" type="ColorRect" parent="ParallaxBackground/MidArchitecture"]

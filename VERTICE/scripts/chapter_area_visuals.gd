@@ -2,13 +2,13 @@ extends Node2D
 
 @export_range(1, 5) var area_id: int = 1
 
-const FAR := Color("#111923")
-const MID := Color("#202d38")
-const STONE := Color("#34424c")
-const EDGE := Color("#586873")
+const FAR := Color("#263746")
+const MID := Color("#354b5b")
+const STONE := Color("#526574")
+const EDGE := Color("#8295a1")
 const GOLD := Color("#b68b54")
 const CYAN := Color("#72a9ad")
-const DARK := Color("#0b1119")
+const DARK := Color("#1b2935")
 
 func _draw() -> void:
 	_draw_horizon()

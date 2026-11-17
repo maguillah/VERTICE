@@ -1,11 +1,11 @@
 shader_type canvas_item;
 
 // Névoa volumétrica simulada de baixo custo para hardware intermediário Android
-uniform vec4 fog_color : source_color = vec4(0.14, 0.16, 0.20, 0.35);
+uniform vec4 fog_color : source_color = vec4(0.14, 0.16, 0.20, 0.22);
 uniform vec4 resonance_tint : source_color = vec4(0.898, 0.596, 0.220, 0.14);
 uniform float resonance_mix : hint_range(0.0, 1.0) = 0.0;
 uniform float drift_speed = 0.025;
-uniform float density : hint_range(0.0, 1.0) = 0.55;
+uniform float density : hint_range(0.0, 1.0) = 0.32;
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);

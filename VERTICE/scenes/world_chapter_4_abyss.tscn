@@ -28,7 +28,7 @@ initial_velocity_max = 18.0
 environment = ExtResource("1_env")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.86, 0.90, 0.98, 1)
+color = Color(1, 1, 1, 1)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -40,17 +40,17 @@ offset_left = -800.0
 offset_top = -600.0
 offset_right = 9200.0
 offset_bottom = 1200.0
-color = Color(0.014, 0.018, 0.032, 1)
+color = Color(0.10, 0.14, 0.20, 1)
 
 [node name="AbyssWall" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
-color = Color(0.028, 0.038, 0.062, 1)
+color = Color(0.090, 0.099, 0.161, 1)
 polygon = PackedVector2Array(420, -280, 620, -280, 560, 900, 390, 900)
 
 [node name="MidArchitecture" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.45, 0.25)
 
 [node name="CathedralRib" type="Polygon2D" parent="ParallaxBackground/MidArchitecture"]
-color = Color(0.04, 0.052, 0.08, 0.9)
+color = Color(0.104, 0.135, 0.208, 0.9)
 polygon = PackedVector2Array(1200, -140, 1340, -140, 1460, 420, 1280, 420)
 
 [node name="FogLayer" type="ColorRect" parent="ParallaxBackground/MidArchitecture"]

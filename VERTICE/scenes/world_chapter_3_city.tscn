@@ -28,7 +28,7 @@ initial_velocity_max = 16.0
 environment = ExtResource("1_env")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.90, 0.93, 0.96, 1)
+color = Color(1, 1, 1, 1)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -40,21 +40,21 @@ offset_left = -800.0
 offset_top = -600.0
 offset_right = 9200.0
 offset_bottom = 1200.0
-color = Color(0.025, 0.032, 0.042, 1)
+color = Color(0.13, 0.17, 0.21, 1)
 
 [node name="Aqueduct1" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
-color = Color(0.044, 0.056, 0.072, 1)
+color = Color(0.114, 0.146, 0.187, 1)
 polygon = PackedVector2Array(200, -180, 1200, -180, 1200, 140, 880, 140, 880, 900, 740, 900, 740, 140, 380, 140, 380, 900, 200, 900)
 
 [node name="ClockTower" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
-color = Color(0.038, 0.048, 0.064, 1)
+color = Color(0.099, 0.125, 0.166, 1)
 polygon = PackedVector2Array(2100, -280, 2280, -280, 2280, 900, 2100, 900)
 
 [node name="MidArchitecture" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.45, 0.25)
 
 [node name="RuinedViaduct" type="Polygon2D" parent="ParallaxBackground/MidArchitecture"]
-color = Color(0.052, 0.065, 0.084, 0.9)
+color = Color(0.135, 0.169, 0.218, 0.9)
 polygon = PackedVector2Array(600, 90, 2100, 90, 2100, 150, 600, 150)
 
 [node name="FogLayer" type="ColorRect" parent="ParallaxBackground/MidArchitecture"]

@@ -4,10 +4,10 @@ func _ready() -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	var stone_far := Color("#171e27")
-	var stone_mid := Color("#202a35")
-	var edge := Color("#394653")
-	var crack := Color("#53606a")
+	var stone_far := Color("#283847")
+	var stone_mid := Color("#3a4b5b")
+	var edge := Color("#637887")
+	var crack := Color("#84939e")
 	var glow := Color("#b68b54")
 
 	# Silhuetas arquitetônicas distantes

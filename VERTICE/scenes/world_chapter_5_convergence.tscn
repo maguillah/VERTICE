@@ -28,7 +28,7 @@ initial_velocity_max = 20.0
 environment = ExtResource("1_env")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.93, 0.90, 0.88, 1)
+color = Color(1, 1, 1, 1)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -40,17 +40,17 @@ offset_left = -800.0
 offset_top = -600.0
 offset_right = 9200.0
 offset_bottom = 1200.0
-color = Color(0.032, 0.024, 0.026, 1)
+color = Color(0.19, 0.14, 0.15, 1)
 
 [node name="ForgeGantry" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
-color = Color(0.056, 0.044, 0.046, 1)
+color = Color(0.146, 0.114, 0.120, 1)
 polygon = PackedVector2Array(500, -240, 2400, -240, 2400, -120, 500, -120)
 
 [node name="MidArchitecture" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.45, 0.25)
 
 [node name="PistonColumn" type="Polygon2D" parent="ParallaxBackground/MidArchitecture"]
-color = Color(0.068, 0.055, 0.058, 0.92)
+color = Color(0.177, 0.143, 0.151, 0.92)
 polygon = PackedVector2Array(1560, -200, 1700, -200, 1700, 900, 1560, 900)
 
 [node name="FogLayer" type="ColorRect" parent="ParallaxBackground/MidArchitecture"]
