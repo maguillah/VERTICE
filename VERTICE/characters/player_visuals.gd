@@ -25,6 +25,7 @@ var _arm_l: Line2D
 var _arm_r: Line2D
 var _core_sprite: Sprite2D
 var _core_light: PointLight2D
+var _core_ring: Line2D
 
 func _ready() -> void:
 	for i in range(7):
@@ -93,6 +94,18 @@ func _build_articulated_2d_body() -> void:
 	_arm_r.end_cap_mode = Line2D.LINE_CAP_ROUND
 	add_child(_arm_r)
 
+	_core_ring = Line2D.new()
+	_core_ring.width = 1.8
+	_core_ring.default_color = Color(1.0, 0.7, 0.3, 0.0)
+	_core_ring.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	_core_ring.end_cap_mode = Line2D.LINE_CAP_ROUND
+	var ring_points := PackedVector2Array()
+	for i in range(33):
+		var angle := TAU * float(i) / 32.0
+		ring_points.append(Vector2(cos(angle), sin(angle)))
+	_core_ring.points = ring_points
+	_core_ring.visible = false
+	add_child(_core_ring)
 	_core_sprite = Sprite2D.new()
 	_core_sprite.texture = TextureFactory2D.tex_core_glow
 	_core_sprite.position = Vector2(2.4, -32.0)
@@ -125,7 +138,8 @@ func update_motion(
 	is_crouching: bool = false,
 	is_climbing: bool = false,
 	is_pushing: bool = false,
-	delta: float = 0.016
+	delta: float = 0.016,
+	is_sliding: bool = false
 ) -> void:
 	_time += delta
 	_facing = facing
@@ -155,7 +169,7 @@ func update_motion(
 	rotation = lerpf(rotation, (base_lean + awaken_lean) * _facing, 12.0 * delta)
 
 	var breathe := sin(_time * 2.2) * 1.1 if speed < 15.0 else absf(sin(_walk_cycle * 2.0)) * 1.6
-	var crouch_drop := (11.5 if is_crouching else 0.0) + _land_crouch * 6.5 + (1.0 - _awaken_progress) * 14.5
+	var crouch_drop := (16.0 if is_sliding else (11.5 if is_crouching else 0.0)) + _land_crouch * 6.5 + (1.0 - _awaken_progress) * 14.5
 	var hip_y := -21.5 + crouch_drop + breathe * 0.35
 	var sh_y := -39.0 + crouch_drop * 0.92 + breathe * 0.55
 
@@ -199,10 +213,13 @@ func update_motion(
 	var arm_swing := sin(_walk_cycle) * (7.0 if is_climbing else (9.0 if is_running else 6.2)) * (1.0 if is_climbing else speed_ratio)
 	var sh_l := Vector2(-2.0, sh_y + 2.0)
 	var hand_l := Vector2(9.0 if is_pushing else (4.0 if is_climbing else -3.0 - arm_swing), sh_y + (6.0 if is_pushing else (-6.0 + arm_swing if is_climbing else 17.5)))
-	_arm_l.points = PackedVector2Array([sh_l, _solve_ik(sh_l, hand_l, 9.5, 9.5, 1.0), hand_l])
 
 	var sh_r := Vector2(2.0, sh_y + 2.0)
 	var hand_r := Vector2(11.0 if is_pushing else (4.0 if is_climbing else 3.0 + arm_swing + reach + awaken_brace * 0.6), sh_y + (5.0 if is_pushing else (-6.0 - arm_swing if is_climbing else 17.5 - reach * 0.65 + awaken_brace * 0.35)))
+	if is_sliding:
+		hand_l = Vector2(-1.0, sh_y + 18.0)
+		hand_r = Vector2(14.0, sh_y + 12.0)
+	_arm_l.points = PackedVector2Array([sh_l, _solve_ik(sh_l, hand_l, 9.5, 9.5, 1.0), hand_l])
 	_arm_r.points = PackedVector2Array([sh_r, _solve_ik(sh_r, hand_r, 9.5, 9.5, 1.0), hand_r])
 
 	_torso_poly.position.y = crouch_drop * 0.92 + breathe * 0.55
@@ -245,6 +262,15 @@ func update_motion(
 	_core_light.position = _core_sprite.position
 	_core_light.color = core_col
 	_core_light.energy = (1.1 + 0.25 * (pulse - 1.0)) * flare_boost
+	_core_ring.position = _core_sprite.position
+	if _flare_timer > 0.0:
+		var flare_progress := clampf(1.0 - _flare_timer, 0.0, 1.0)
+		_core_ring.scale = Vector2.ONE * (5.0 + flare_progress * 24.0)
+		var ring_alpha := sin(flare_progress * PI) * 0.9
+		_core_ring.default_color = Color(core_col.r, core_col.g, core_col.b, ring_alpha)
+		_core_ring.visible = ring_alpha > 0.01
+	else:
+		_core_ring.visible = false
 
 func start_awaken() -> void:
 	_awaken_progress = 0.0

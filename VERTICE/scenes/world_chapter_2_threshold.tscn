@@ -34,7 +34,7 @@ script = ExtResource("8_c2")
 environment = ExtResource("1_env")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.72, 0.78, 0.88, 1)
+color = Color(0.88, 0.92, 0.98, 1)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

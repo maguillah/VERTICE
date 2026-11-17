@@ -28,7 +28,7 @@ initial_velocity_max = 20.0
 environment = ExtResource("1_env")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.80, 0.76, 0.74, 1)
+color = Color(0.93, 0.90, 0.88, 1)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
