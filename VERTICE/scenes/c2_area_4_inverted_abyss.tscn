@@ -1,0 +1,147 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
+[ext_resource type="PackedScene" path="res://scenes/resonance_node.tscn" id="2_rn"]
+[ext_resource type="PackedScene" path="res://scenes/spatial_gate.tscn" id="3_sg"]
+[ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="4_cp"]
+[ext_resource type="PackedScene" path="res://scenes/echo_memory.tscn" id="5_em"]
+[ext_resource type="Script" path="res://scripts/resonance_object.gd" id="6_ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_trig4"]
+size = Vector2(120, 680)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_abyss_entry"]
+size = Vector2(310, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_entry_step"]
+size = Vector2(65, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_echo_alcove"]
+size = Vector2(210, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_pres_shutter"]
+size = Vector2(34, 115)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_rup_elev"]
+size = Vector2(180, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_upper_bridge"]
+size = Vector2(240, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_lower_vault"]
+size = Vector2(500, 135)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_exit_ledge"]
+size = Vector2(240, 145)
+
+[node name="C2_Area4_InvertedAbyss" type="Node2D"]
+
+[node name="AreaTrigger" type="Area2D" parent="."]
+position = Vector2(220, 320)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_at")
+area_id = 9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+shape = SubResource("RectangleShape2D_c2_trig4")
+
+[node name="AbyssEntry" type="StaticBody2D" parent="."]
+position = Vector2(325, 450)
+script = ExtResource("6_ro")
+object_mode = 0
+size = Vector2(310, 130)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AbyssEntry"]
+shape = SubResource("RectangleShape2D_c2_abyss_entry")
+
+[node name="EntryStep" type="StaticBody2D" parent="."]
+position = Vector2(447, 355)
+script = ExtResource("6_ro")
+object_mode = 0
+size = Vector2(65, 60)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntryStep"]
+shape = SubResource("RectangleShape2D_c2_entry_step")
+
+[node name="EchoAlcove" type="StaticBody2D" parent="."]
+position = Vector2(290, 282)
+script = ExtResource("6_ro")
+object_mode = 1
+size = Vector2(210, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EchoAlcove"]
+shape = SubResource("RectangleShape2D_c2_echo_alcove")
+
+[node name="PresentShutter" type="StaticBody2D" parent="."]
+position = Vector2(322, 212)
+script = ExtResource("6_ro")
+object_mode = 2
+size = Vector2(34, 115)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PresentShutter"]
+shape = SubResource("RectangleShape2D_c2_pres_shutter")
+
+[node name="C2_Anchor2" parent="." instance=ExtResource("2_rn")]
+position = Vector2(235, 270)
+switch_type = 2
+anchor_id = "c2_anchor_2"
+
+[node name="RupturaElevator" type="StaticBody2D" parent="."]
+position = Vector2(660, 443)
+script = ExtResource("6_ro")
+object_mode = 3
+size = Vector2(180, 36)
+ruptura_offset = Vector2(0, -150)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RupturaElevator"]
+shape = SubResource("RectangleShape2D_c2_rup_elev")
+
+[node name="UpperBridge" type="StaticBody2D" parent="."]
+position = Vector2(950, 287)
+script = ExtResource("6_ro")
+object_mode = 1
+size = Vector2(240, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBridge"]
+shape = SubResource("RectangleShape2D_c2_upper_bridge")
+
+[node name="C2_Anchor3" parent="." instance=ExtResource("2_rn")]
+position = Vector2(950, 275)
+switch_type = 2
+anchor_id = "c2_anchor_3"
+
+[node name="LowerVault" type="StaticBody2D" parent="."]
+position = Vector2(1090, 477)
+script = ExtResource("6_ro")
+object_mode = 0
+size = Vector2(500, 135)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerVault"]
+shape = SubResource("RectangleShape2D_c2_lower_vault")
+
+[node name="EchoMemory_C2_4" parent="." instance=ExtResource("5_em")]
+position = Vector2(970, 410)
+memory_id = "mem_c2_inverted_spire"
+pose_kind = 0
+
+[node name="ExitSeal" parent="." instance=ExtResource("3_sg")]
+position = Vector2(1230, 410)
+permanent_when_puzzle_solved = true
+
+[node name="ExitLedge" type="StaticBody2D" parent="."]
+position = Vector2(1550, 467)
+script = ExtResource("6_ro")
+object_mode = 0
+size = Vector2(240, 145)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitLedge"]
+shape = SubResource("RectangleShape2D_c2_exit_ledge")
+
+[node name="Checkpoint_C2_3" parent="." instance=ExtResource("4_cp")]
+position = Vector2(1550, 395)
+checkpoint_id = "cp_c2_area_4"
+area_id = 9

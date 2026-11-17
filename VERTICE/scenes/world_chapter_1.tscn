@@ -1,0 +1,110 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Environment" path="res://environments/chapter_1_env.tres" id="1_env"]
+[ext_resource type="Shader" path="res://shaders/water_reflection_2d.gdshader" id="2_water"]
+[ext_resource type="Shader" path="res://shaders/volumetric_fog.gdshader" id="3_fog"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="4_player"]
+[ext_resource type="Script" path="res://scripts/camera_rig.gd" id="5_cam"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="6_hud"]
+[ext_resource type="PackedScene" path="res://scenes/touch_controls.tscn" id="7_touch"]
+[ext_resource type="PackedScene" path="res://scenes/area_1_silence.tscn" id="8_a1"]
+[ext_resource type="PackedScene" path="res://scenes/area_2_vestige.tscn" id="9_a2"]
+[ext_resource type="PackedScene" path="res://scenes/area_3_memory.tscn" id="10_a3"]
+[ext_resource type="PackedScene" path="res://scenes/area_4_distortion.tscn" id="11_a4"]
+[ext_resource type="PackedScene" path="res://scenes/area_5_call.tscn" id="12_a5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_water"]
+shader = ExtResource("2_water")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fog"]
+shader = ExtResource("3_fog")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleMat_dust"]
+emission_shape = 3
+emission_box_extents = Vector3(1200, 260, 1)
+gravity = Vector3(0, -6, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 16.0
+
+[node name="WorldChapter1" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_env")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.76, 0.80, 0.86, 1)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="FarAtmosphere" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.18, 0.08)
+
+[node name="SkyGrad" type="ColorRect" parent="ParallaxBackground/FarAtmosphere"]
+offset_left = -800.0
+offset_top = -600.0
+offset_right = 8800.0
+offset_bottom = 1200.0
+color = Color(0.0235, 0.0275, 0.0353, 1)
+
+[node name="Monolith1" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
+color = Color(0.038, 0.045, 0.06, 1)
+polygon = PackedVector2Array(260, -200, 390, -200, 390, 900, 260, 900)
+
+[node name="Monolith2" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
+color = Color(0.035, 0.042, 0.056, 1)
+polygon = PackedVector2Array(1240, -260, 1460, -260, 1460, 900, 1240, 900)
+
+[node name="MidArchitecture" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.45, 0.25)
+
+[node name="ArchBridge" type="Polygon2D" parent="ParallaxBackground/MidArchitecture"]
+color = Color(0.052, 0.062, 0.082, 0.88)
+polygon = PackedVector2Array(700, 80, 1850, 80, 1850, 130, 700, 130)
+
+[node name="FogLayer" type="ColorRect" parent="ParallaxBackground/MidArchitecture"]
+material = SubResource("ShaderMaterial_fog")
+offset_left = -600.0
+offset_top = 120.0
+offset_right = 8400.0
+offset_bottom = 780.0
+
+[node name="AbyssWater2D" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_water")
+offset_left = -400.0
+offset_top = 510.0
+offset_right = 7600.0
+offset_bottom = 960.0
+
+[node name="DustParticles" type="GPUParticles2D" parent="."]
+position = Vector2(2200, 320)
+amount = 36
+lifetime = 5.0
+process_material = SubResource("ParticleMat_dust")
+
+[node name="Areas" type="Node2D" parent="."]
+
+[node name="Area1_Silence" parent="Areas" instance=ExtResource("8_a1")]
+
+[node name="Area2_Vestige" parent="Areas" instance=ExtResource("9_a2")]
+position = Vector2(1350, 0)
+
+[node name="Area3_Memory" parent="Areas" instance=ExtResource("10_a3")]
+position = Vector2(2650, 0)
+
+[node name="Area4_Distortion" parent="Areas" instance=ExtResource("11_a4")]
+position = Vector2(4100, 0)
+
+[node name="Area5_Call" parent="Areas" instance=ExtResource("12_a5")]
+position = Vector2(5700, 0)
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+position = Vector2(160, 420)
+
+[node name="CameraRig" type="Camera2D" parent="."]
+position = Vector2(160, 340)
+script = ExtResource("5_cam")
+target_path = NodePath("../Player")
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
+
+[node name="TouchControls" parent="." instance=ExtResource("7_touch")]

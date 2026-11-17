@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/echo_memory_vignette.gd" id="1_em"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mem"]
+radius = 48.0
+
+[node name="EchoMemory" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_em")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("CircleShape2D_mem")

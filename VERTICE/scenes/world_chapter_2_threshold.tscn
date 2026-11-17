@@ -1,0 +1,112 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Environment" path="res://environments/chapter_1_env.tres" id="1_env"]
+[ext_resource type="Shader" path="res://shaders/water_reflection_2d.gdshader" id="2_water"]
+[ext_resource type="Shader" path="res://shaders/volumetric_fog.gdshader" id="3_fog"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="4_player"]
+[ext_resource type="Script" path="res://scripts/camera_rig.gd" id="5_cam"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="6_hud"]
+[ext_resource type="PackedScene" path="res://scenes/touch_controls.tscn" id="7_touch"]
+[ext_resource type="Script" path="res://scripts/chapter_2_threshold.gd" id="8_c2"]
+[ext_resource type="PackedScene" path="res://scenes/c2_area_1_deep_silence.tscn" id="9_a1"]
+[ext_resource type="PackedScene" path="res://scenes/c2_area_2_phase_pendulum.tscn" id="10_a2"]
+[ext_resource type="PackedScene" path="res://scenes/c2_area_3_echo_archive.tscn" id="11_a3"]
+[ext_resource type="PackedScene" path="res://scenes/c2_area_4_inverted_abyss.tscn" id="12_a4"]
+[ext_resource type="PackedScene" path="res://scenes/c2_area_5_convergence.tscn" id="13_a5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_water2"]
+shader = ExtResource("2_water")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fog2"]
+shader = ExtResource("3_fog")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleMat_dust2"]
+emission_shape = 3
+emission_box_extents = Vector3(1400, 260, 1)
+gravity = Vector3(0, -7, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 18.0
+
+[node name="WorldChapter2Threshold" type="Node2D"]
+script = ExtResource("8_c2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_env")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.72, 0.78, 0.88, 1)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="FarAtmosphere" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.18, 0.08)
+
+[node name="SkyGrad" type="ColorRect" parent="ParallaxBackground/FarAtmosphere"]
+offset_left = -800.0
+offset_top = -600.0
+offset_right = 9200.0
+offset_bottom = 1200.0
+color = Color(0.02, 0.026, 0.038, 1)
+
+[node name="TowerLeft" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
+color = Color(0.04, 0.052, 0.072, 1)
+polygon = PackedVector2Array(180, -240, 310, -240, 310, 900, 180, 900)
+
+[node name="InvertedSpire1" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
+color = Color(0.044, 0.056, 0.078, 1)
+polygon = PackedVector2Array(1320, -260, 1520, -260, 1460, 420, 1380, 420)
+
+[node name="MidArchitecture" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.45, 0.25)
+
+[node name="ArchSpan" type="Polygon2D" parent="ParallaxBackground/MidArchitecture"]
+color = Color(0.048, 0.06, 0.084, 0.88)
+polygon = PackedVector2Array(820, 60, 2240, 60, 2240, 118, 820, 118)
+
+[node name="FogLayer" type="ColorRect" parent="ParallaxBackground/MidArchitecture"]
+material = SubResource("ShaderMaterial_fog2")
+offset_left = -600.0
+offset_top = 120.0
+offset_right = 8800.0
+offset_bottom = 780.0
+
+[node name="AbyssWater2D" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_water2")
+offset_left = -400.0
+offset_top = 480.0
+offset_right = 7800.0
+offset_bottom = 960.0
+
+[node name="DustParticles" type="GPUParticles2D" parent="."]
+position = Vector2(2600, 310)
+amount = 36
+lifetime = 5.0
+process_material = SubResource("ParticleMat_dust2")
+
+[node name="Areas" type="Node2D" parent="."]
+
+[node name="C2_Area1_DeepSilence" parent="Areas" instance=ExtResource("9_a1")]
+
+[node name="C2_Area2_PhasePendulum" parent="Areas" instance=ExtResource("10_a2")]
+position = Vector2(1350, 0)
+
+[node name="C2_Area3_EchoArchive" parent="Areas" instance=ExtResource("11_a3")]
+position = Vector2(2780, 0)
+
+[node name="C2_Area4_InvertedAbyss" parent="Areas" instance=ExtResource("12_a4")]
+position = Vector2(4280, 0)
+
+[node name="C2_Area5_Convergence" parent="Areas" instance=ExtResource("13_a5")]
+position = Vector2(5950, 0)
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+position = Vector2(160, 410)
+
+[node name="CameraRig" type="Camera2D" parent="."]
+position = Vector2(160, 340)
+script = ExtResource("5_cam")
+target_path = NodePath("../Player")
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
+
+[node name="TouchControls" parent="." instance=ExtResource("7_touch")]

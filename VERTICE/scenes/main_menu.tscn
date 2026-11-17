@@ -1,0 +1,81 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_mm"]
+[ext_resource type="Theme" path="res://ui/theme_vertice.tres" id="2_th"]
+[ext_resource type="PackedScene" path="res://ui/settings_menu.tscn" id="3_sm"]
+[ext_resource type="PackedScene" path="res://ui/credits_menu.tscn" id="4_cm"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_th")
+script = ExtResource("1_mm")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.0235, 0.0275, 0.0353, 1)
+
+[node name="MenuPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 72.0
+offset_top = 120.0
+offset_right = 460.0
+offset_bottom = -80.0
+
+[node name="Title" type="Label" parent="MenuPanel"]
+layout_mode = 0
+offset_right = 380.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 48
+text = "VÉRTICE"
+
+[node name="Subtitle" type="Label" parent="MenuPanel"]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 380.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(0.898, 0.596, 0.22, 1)
+theme_override_font_sizes/font_size = 16
+text = "O Limiar da Existência"
+
+[node name="VBox" type="VBoxContainer" parent="MenuPanel"]
+layout_mode = 0
+offset_top = 148.0
+offset_right = 280.0
+offset_bottom = 420.0
+theme_override_constants/separation = 14
+
+[node name="BtnStart" type="Button" parent="MenuPanel/VBox"]
+layout_mode = 2
+text = "Iniciar"
+
+[node name="BtnContinue" type="Button" parent="MenuPanel/VBox"]
+layout_mode = 2
+text = "Continuar"
+
+[node name="ChapterSelector" type="HBoxContainer" parent="MenuPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BtnSettings" type="Button" parent="MenuPanel/VBox"]
+layout_mode = 2
+text = "Configurações"
+
+[node name="BtnCredits" type="Button" parent="MenuPanel/VBox"]
+layout_mode = 2
+text = "Créditos"
+
+[node name="SettingsMenu" parent="." instance=ExtResource("3_sm")]
+visible = false
+
+[node name="CreditsMenu" parent="." instance=ExtResource("4_cm")]
+visible = false

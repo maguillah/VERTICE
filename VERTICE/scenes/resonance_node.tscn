@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resonance_switch.gd" id="1_rs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_node"]
+radius = 46.0
+
+[node name="ResonanceNode" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_rs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -32)
+shape = SubResource("CircleShape2D_node")
+
+[node name="PedestalPoly" type="Polygon2D" parent="."]
+color = Color(0.09, 0.11, 0.14, 1)
+polygon = PackedVector2Array(-18, 0, 18, 0, 12, -24, -12, -24)
+
+[node name="ShardPoly" type="Polygon2D" parent="."]
+position = Vector2(0, -44)
+color = Color(0.96, 0.66, 0.26, 1)
+polygon = PackedVector2Array(0, -14, 9, 0, 0, 14, -9, 0)
+
+[node name="NodeLight" type="PointLight2D" parent="."]
+position = Vector2(0, -44)
+color = Color(0.96, 0.64, 0.24, 1)
+energy = 1.4
+texture_scale = 3.8

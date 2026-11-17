@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ruptura_gate.gd" id="1_rg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gate"]
+size = Vector2(38, 180)
+
+[node name="SpatialGate" type="StaticBody2D"]
+script = ExtResource("1_rg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -90)
+shape = SubResource("RectangleShape2D_gate")
+
+[node name="GatePoly" type="Polygon2D" parent="."]
+color = Color(0.08, 0.095, 0.12, 1)
+polygon = PackedVector2Array(-19, 0, 19, 0, 19, -180, -19, -180)
+
+[node name="AmberSeam" type="Polygon2D" parent="."]
+color = Color(0.95, 0.6, 0.2, 0.9)
+polygon = PackedVector2Array(-2, -10, 2, -10, 2, -170, -2, -170)

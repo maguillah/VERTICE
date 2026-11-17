@@ -1,0 +1,107 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
+[ext_resource type="PackedScene" path="res://scenes/resonance_node.tscn" id="2_rn"]
+[ext_resource type="PackedScene" path="res://scenes/echo_memory.tscn" id="3_em"]
+[ext_resource type="Script" path="res://scripts/resonance_object.gd" id="4_ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_trig2"]
+size = Vector2(120, 680)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_ledge1"]
+size = Vector2(230, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_rup_bridge"]
+size = Vector2(210, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_pres_wall"]
+size = Vector2(34, 110)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_mid_solid"]
+size = Vector2(635, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_step_metal"]
+size = Vector2(120, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_echo_upper"]
+size = Vector2(240, 24)
+
+[node name="C2_Area2_PhasePendulum" type="Node2D"]
+
+[node name="AreaTrigger" type="Area2D" parent="."]
+position = Vector2(160, 320)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_at")
+area_id = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+shape = SubResource("RectangleShape2D_c2_trig2")
+
+[node name="Ledge1" type="StaticBody2D" parent="."]
+position = Vector2(220, 421)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(230, 52)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ledge1"]
+shape = SubResource("RectangleShape2D_c2_ledge1")
+
+[node name="RupturaBridge" type="StaticBody2D" parent="."]
+position = Vector2(545, 448)
+script = ExtResource("4_ro")
+object_mode = 3
+size = Vector2(210, 36)
+ruptura_offset = Vector2(0, -95)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RupturaBridge"]
+shape = SubResource("RectangleShape2D_c2_rup_bridge")
+
+[node name="PresentWall" type="StaticBody2D" parent="."]
+position = Vector2(542, 300)
+script = ExtResource("4_ro")
+object_mode = 2
+size = Vector2(34, 110)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PresentWall"]
+shape = SubResource("RectangleShape2D_c2_pres_wall")
+
+[node name="MidSolid" type="StaticBody2D" parent="."]
+position = Vector2(1062, 425)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(635, 130)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MidSolid"]
+shape = SubResource("RectangleShape2D_c2_mid_solid")
+
+[node name="StepMetal" type="StaticBody2D" parent="."]
+position = Vector2(1060, 340)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(120, 40)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StepMetal"]
+shape = SubResource("RectangleShape2D_c2_step_metal")
+
+[node name="EchoUpper" type="StaticBody2D" parent="."]
+position = Vector2(850, 297)
+script = ExtResource("4_ro")
+object_mode = 1
+size = Vector2(240, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EchoUpper"]
+shape = SubResource("RectangleShape2D_c2_echo_upper")
+
+[node name="C2_Anchor1" parent="." instance=ExtResource("2_rn")]
+position = Vector2(800, 285)
+switch_type = 2
+anchor_id = "c2_anchor_1"
+
+[node name="EchoMemory_C2_2" parent="." instance=ExtResource("3_em")]
+position = Vector2(1240, 360)
+memory_id = "mem_c2_pendulum_architect"
+pose_kind = 1

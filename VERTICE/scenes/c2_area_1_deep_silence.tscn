@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
+[ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="2_cp"]
+[ext_resource type="PackedScene" path="res://scenes/echo_memory.tscn" id="3_em"]
+[ext_resource type="Script" path="res://scripts/resonance_object.gd" id="4_ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_trig1"]
+size = Vector2(90, 680)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_entry1"]
+size = Vector2(680, 260)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_echo1"]
+size = Vector2(220, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_solid_end1"]
+size = Vector2(360, 220)
+
+[node name="C2_Area1_DeepSilence" type="Node2D"]
+
+[node name="AreaTrigger" type="Area2D" parent="."]
+position = Vector2(140, 320)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_at")
+area_id = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+shape = SubResource("RectangleShape2D_c2_trig1")
+
+[node name="EntryFloor" type="StaticBody2D" parent="."]
+position = Vector2(240, 560)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(680, 260)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntryFloor"]
+shape = SubResource("RectangleShape2D_c2_entry1")
+
+[node name="EchoSpan1" type="StaticBody2D" parent="."]
+position = Vector2(795, 417)
+script = ExtResource("4_ro")
+object_mode = 1
+size = Vector2(220, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EchoSpan1"]
+shape = SubResource("RectangleShape2D_c2_echo1")
+
+[node name="SolidEnd" type="StaticBody2D" parent="."]
+position = Vector2(1170, 500)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(360, 220)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidEnd"]
+shape = SubResource("RectangleShape2D_c2_solid_end1")
+
+[node name="EchoMemory_C2_1" parent="." instance=ExtResource("3_em")]
+position = Vector2(1110, 390)
+memory_id = "mem_c2_submerged_choir"
+pose_kind = 0
+
+[node name="Checkpoint_C2_1" parent="." instance=ExtResource("2_cp")]
+position = Vector2(1245, 390)
+checkpoint_id = "cp_c2_area_1"
+area_id = 6

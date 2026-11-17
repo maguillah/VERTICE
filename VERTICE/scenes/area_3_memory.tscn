@@ -1,0 +1,104 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
+[ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="2_cp"]
+[ext_resource type="PackedScene" path="res://scenes/echo_memory.tscn" id="3_em"]
+[ext_resource type="Script" path="res://scripts/resonance_object.gd" id="4_ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trig3"]
+size = Vector2(80, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bridge1"]
+size = Vector2(270, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_solid_mid"]
+size = Vector2(220, 75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bridge2"]
+size = Vector2(220, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(36, 115)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bridge3"]
+size = Vector2(210, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_terrace"]
+size = Vector2(340, 160)
+
+[node name="Area3_Memory" type="Node2D"]
+
+[node name="AreaTrigger" type="Area2D" parent="."]
+position = Vector2(60, 320)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_at")
+area_id = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+shape = SubResource("RectangleShape2D_trig3")
+
+[node name="EchoBridge1" type="StaticBody2D" parent="."]
+position = Vector2(170, 383)
+script = ExtResource("4_ro")
+object_mode = 1
+size = Vector2(270, 26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EchoBridge1"]
+shape = SubResource("RectangleShape2D_bridge1")
+
+[node name="SolidMid" type="StaticBody2D" parent="."]
+position = Vector2(505, 432)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(220, 75)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidMid"]
+shape = SubResource("RectangleShape2D_solid_mid")
+
+[node name="EchoMemory2" parent="." instance=ExtResource("3_em")]
+position = Vector2(505, 395)
+memory_id = "mem_kneeling_silhouette"
+pose_kind = 1
+
+[node name="EchoBridge2" type="StaticBody2D" parent="."]
+position = Vector2(805, 368)
+script = ExtResource("4_ro")
+object_mode = 1
+size = Vector2(220, 26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EchoBridge2"]
+shape = SubResource("RectangleShape2D_bridge2")
+
+[node name="PresentCounterweight" type="StaticBody2D" parent="."]
+position = Vector2(838, 297)
+script = ExtResource("4_ro")
+object_mode = 2
+size = Vector2(36, 115)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PresentCounterweight"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="EchoBridge3" type="StaticBody2D" parent="."]
+position = Vector2(1085, 343)
+script = ExtResource("4_ro")
+object_mode = 1
+size = Vector2(210, 26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EchoBridge3"]
+shape = SubResource("RectangleShape2D_bridge3")
+
+[node name="EndTerrace" type="StaticBody2D" parent="."]
+position = Vector2(1410, 440)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(340, 160)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndTerrace"]
+shape = SubResource("RectangleShape2D_terrace")
+
+[node name="Checkpoint2" parent="." instance=ExtResource("2_cp")]
+position = Vector2(1370, 360)
+checkpoint_id = "cp_area_3"
+area_id = 3

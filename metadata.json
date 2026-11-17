@@ -1,0 +1,6 @@
+{
+  "name": "VÉRTICE — O Limiar da Existência",
+  "description": "Jogo cinematográfico de aventura, plataforma e quebra-cabeças existenciais com mecânica de Ressonância (Presente, Eco, Ruptura) e projeto completo Godot 4 para Android.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
+[ext_resource type="PackedScene" path="res://scenes/resonance_node.tscn" id="2_rn"]
+[ext_resource type="PackedScene" path="res://scenes/echo_memory.tscn" id="3_em"]
+[ext_resource type="Script" path="res://scripts/resonance_object.gd" id="4_ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trig2"]
+size = Vector2(80, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ledge1"]
+size = Vector2(220, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ledge2"]
+size = Vector2(210, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ledge3"]
+size = Vector2(510, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ghost"]
+size = Vector2(240, 22)
+
+[node name="Area2_Vestige" type="Node2D"]
+
+[node name="AreaTrigger" type="Area2D" parent="."]
+position = Vector2(60, 320)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_at")
+area_id = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+shape = SubResource("RectangleShape2D_trig2")
+
+[node name="OxidizedCatwalk1" type="StaticBody2D" parent="."]
+position = Vector2(230, 458)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(220, 46)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OxidizedCatwalk1"]
+shape = SubResource("RectangleShape2D_ledge1")
+
+[node name="GhostPreviewTrace" type="StaticBody2D" parent="."]
+position = Vector2(290, 321)
+script = ExtResource("4_ro")
+object_mode = 1
+size = Vector2(240, 22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GhostPreviewTrace"]
+shape = SubResource("RectangleShape2D_ghost")
+
+[node name="OxidizedCatwalk2" type="StaticBody2D" parent="."]
+position = Vector2(540, 413)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(210, 46)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OxidizedCatwalk2"]
+shape = SubResource("RectangleShape2D_ledge2")
+
+[node name="ConcreteLedge3" type="StaticBody2D" parent="."]
+position = Vector2(980, 415)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(510, 120)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConcreteLedge3"]
+shape = SubResource("RectangleShape2D_ledge3")
+
+[node name="EchoMemory1" parent="." instance=ExtResource("3_em")]
+position = Vector2(880, 355)
+memory_id = "mem_vestige_observer"
+pose_kind = 0
+
+[node name="UnlockEchoNode" parent="." instance=ExtResource("2_rn")]
+position = Vector2(1060, 355)
+switch_type = 0

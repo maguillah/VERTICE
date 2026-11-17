@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
+[ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="2_cp"]
+[ext_resource type="Script" path="res://scripts/resonance_object.gd" id="3_ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trig1"]
+size = Vector2(80, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f1"]
+size = Vector2(740, 260)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_step1"]
+size = Vector2(220, 290)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f2"]
+size = Vector2(430, 290)
+
+[node name="Area1_Silence" type="Node2D"]
+
+[node name="AreaTrigger" type="Area2D" parent="."]
+position = Vector2(120, 320)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_at")
+area_id = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+shape = SubResource("RectangleShape2D_trig1")
+
+[node name="FloorWet1" type="StaticBody2D" parent="."]
+position = Vector2(250, 610)
+script = ExtResource("3_ro")
+object_mode = 0
+size = Vector2(740, 260)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorWet1"]
+shape = SubResource("RectangleShape2D_f1")
+
+[node name="Step1" type="StaticBody2D" parent="."]
+position = Vector2(730, 595)
+script = ExtResource("3_ro")
+object_mode = 0
+size = Vector2(220, 290)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Step1"]
+shape = SubResource("RectangleShape2D_step1")
+
+[node name="FloorWet2" type="StaticBody2D" parent="."]
+position = Vector2(1165, 595)
+script = ExtResource("3_ro")
+object_mode = 0
+size = Vector2(430, 290)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorWet2"]
+shape = SubResource("RectangleShape2D_f2")
+
+[node name="Checkpoint1" parent="." instance=ExtResource("2_cp")]
+position = Vector2(1080, 450)
+checkpoint_id = "cp_area_1"
+area_id = 1

@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
+[ext_resource type="PackedScene" path="res://scenes/resonance_node.tscn" id="2_rn"]
+[ext_resource type="PackedScene" path="res://scenes/echo_memory.tscn" id="3_em"]
+[ext_resource type="Script" path="res://scripts/resonance_object.gd" id="4_ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trig5"]
+size = Vector2(80, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_step5a"]
+size = Vector2(240, 180)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_step5b"]
+size = Vector2(240, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bridge5"]
+size = Vector2(760, 220)
+
+[node name="Area5_Call" type="Node2D"]
+
+[node name="AreaTrigger" type="Area2D" parent="."]
+position = Vector2(80, 320)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_at")
+area_id = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+shape = SubResource("RectangleShape2D_trig5")
+
+[node name="StepUp1" type="StaticBody2D" parent="."]
+position = Vector2(225, 465)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(240, 180)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StepUp1"]
+shape = SubResource("RectangleShape2D_step5a")
+
+[node name="StepUp2" type="StaticBody2D" parent="."]
+position = Vector2(465, 455)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(240, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StepUp2"]
+shape = SubResource("RectangleShape2D_step5b")
+
+[node name="ThresholdBridge" type="StaticBody2D" parent="."]
+position = Vector2(965, 445)
+script = ExtResource("4_ro")
+object_mode = 0
+size = Vector2(760, 220)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ThresholdBridge"]
+shape = SubResource("RectangleShape2D_bridge5")
+
+[node name="EchoMemoryFinal" parent="." instance=ExtResource("3_em")]
+position = Vector2(860, 335)
+memory_id = "mem_threshold_echo"
+pose_kind = 2
+
+[node name="ChapterThreshold" parent="." instance=ExtResource("2_rn")]
+position = Vector2(1160, 335)
+switch_type = 4

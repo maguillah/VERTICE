@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/settings_menu.gd" id="1_sm"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_sm")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -140.0
+offset_right = 200.0
+offset_bottom = 140.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="VolumeLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Volume Geral"
+
+[node name="VolumeSlider" type="HSlider" parent="Panel/VBox"]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 0.85
+
+[node name="SensLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Sensibilidade Touchscreen"
+
+[node name="SensitivitySlider" type="HSlider" parent="Panel/VBox"]
+layout_mode = 2
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 1.0
+
+[node name="QualityLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Qualidade Gráfica"
+
+[node name="QualityOption" type="OptionButton" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Aplicar e Fechar"

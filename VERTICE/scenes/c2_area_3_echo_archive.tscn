@@ -1,0 +1,93 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
+[ext_resource type="PackedScene" path="res://scenes/resonance_node.tscn" id="2_rn"]
+[ext_resource type="PackedScene" path="res://scenes/spatial_gate.tscn" id="3_sg"]
+[ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="4_cp"]
+[ext_resource type="PackedScene" path="res://scenes/echo_memory.tscn" id="5_em"]
+[ext_resource type="Script" path="res://scripts/resonance_object.gd" id="6_ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_trig3"]
+size = Vector2(120, 680)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_echo_catwalk"]
+size = Vector2(250, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_chamber"]
+size = Vector2(420, 110)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_rup_slide"]
+size = Vector2(225, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2_end_terrace"]
+size = Vector2(290, 150)
+
+[node name="C2_Area3_EchoArchive" type="Node2D"]
+
+[node name="AreaTrigger" type="Area2D" parent="."]
+position = Vector2(140, 320)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_at")
+area_id = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+shape = SubResource("RectangleShape2D_c2_trig3")
+
+[node name="EchoCatwalk1" type="StaticBody2D" parent="."]
+position = Vector2(170, 377)
+script = ExtResource("6_ro")
+object_mode = 1
+size = Vector2(250, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EchoCatwalk1"]
+shape = SubResource("RectangleShape2D_c2_echo_catwalk")
+
+[node name="ArchiveChamber" type="StaticBody2D" parent="."]
+position = Vector2(600, 440)
+script = ExtResource("6_ro")
+object_mode = 0
+size = Vector2(420, 110)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArchiveChamber"]
+shape = SubResource("RectangleShape2D_c2_chamber")
+
+[node name="C2_FreqSwitch" parent="." instance=ExtResource("2_rn")]
+position = Vector2(475, 385)
+switch_type = 3
+
+[node name="ArchiveGate" parent="." instance=ExtResource("3_sg")]
+position = Vector2(615, 385)
+requires_frequency_switch = true
+permanent_when_puzzle_solved = false
+
+[node name="EchoMemory_C2_3" parent="." instance=ExtResource("5_em")]
+position = Vector2(730, 385)
+memory_id = "mem_c2_twin_oath"
+pose_kind = 2
+
+[node name="RupturaSlider" type="StaticBody2D" parent="."]
+position = Vector2(1017, 402)
+script = ExtResource("6_ro")
+object_mode = 3
+size = Vector2(225, 34)
+ruptura_offset = Vector2(80, -35)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RupturaSlider"]
+shape = SubResource("RectangleShape2D_c2_rup_slide")
+
+[node name="EndTerrace" type="StaticBody2D" parent="."]
+position = Vector2(1415, 445)
+script = ExtResource("6_ro")
+object_mode = 0
+size = Vector2(290, 150)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndTerrace"]
+shape = SubResource("RectangleShape2D_c2_end_terrace")
+
+[node name="Checkpoint_C2_2" parent="." instance=ExtResource("4_cp")]
+position = Vector2(1425, 370)
+checkpoint_id = "cp_c2_area_3"
+area_id = 8

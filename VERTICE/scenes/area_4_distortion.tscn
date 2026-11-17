@@ -1,0 +1,124 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_transition.gd" id="1_at"]
+[ext_resource type="PackedScene" path="res://scenes/resonance_node.tscn" id="2_rn"]
+[ext_resource type="PackedScene" path="res://scenes/spatial_gate.tscn" id="3_sg"]
+[ext_resource type="PackedScene" path="res://scenes/checkpoint.tscn" id="4_cp"]
+[ext_resource type="PackedScene" path="res://scenes/echo_memory.tscn" id="5_em"]
+[ext_resource type="Script" path="res://scripts/resonance_object.gd" id="6_ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trig4"]
+size = Vector2(80, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_entry4"]
+size = Vector2(280, 140)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elev4"]
+size = Vector2(185, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_balcony"]
+size = Vector2(265, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chamber4"]
+size = Vector2(485, 140)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit4"]
+size = Vector2(320, 160)
+
+[node name="Area4_Distortion" type="Node2D"]
+
+[node name="AreaTrigger" type="Area2D" parent="."]
+position = Vector2(60, 320)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_at")
+area_id = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger"]
+shape = SubResource("RectangleShape2D_trig4")
+
+[node name="EntryFloor" type="StaticBody2D" parent="."]
+position = Vector2(270, 460)
+script = ExtResource("6_ro")
+object_mode = 0
+size = Vector2(280, 140)
+use_wet_concrete = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntryFloor"]
+shape = SubResource("RectangleShape2D_entry4")
+
+[node name="UnlockRupturaNode" parent="." instance=ExtResource("2_rn")]
+position = Vector2(260, 390)
+switch_type = 1
+
+[node name="RupturaElevator" type="StaticBody2D" parent="."]
+position = Vector2(607, 449)
+script = ExtResource("6_ro")
+object_mode = 3
+size = Vector2(185, 38)
+ruptura_offset = Vector2(0, -155)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RupturaElevator"]
+shape = SubResource("RectangleShape2D_elev4")
+
+[node name="EcoBalcony" type="StaticBody2D" parent="."]
+position = Vector2(352, 247)
+script = ExtResource("6_ro")
+object_mode = 1
+size = Vector2(265, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EcoBalcony"]
+shape = SubResource("RectangleShape2D_balcony")
+
+[node name="Anchor1" parent="." instance=ExtResource("2_rn")]
+position = Vector2(310, 235)
+switch_type = 2
+anchor_id = "anchor_1"
+
+[node name="EchoMemory3" parent="." instance=ExtResource("5_em")]
+position = Vector2(380, 235)
+memory_id = "mem_fracture_witness"
+pose_kind = 2
+
+[node name="ChamberFloor" type="StaticBody2D" parent="."]
+position = Vector2(1027, 480)
+script = ExtResource("6_ro")
+object_mode = 0
+size = Vector2(485, 140)
+use_oxidized_metal = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChamberFloor"]
+shape = SubResource("RectangleShape2D_chamber4")
+
+[node name="FrequencySwitch" parent="." instance=ExtResource("2_rn")]
+position = Vector2(835, 410)
+switch_type = 3
+
+[node name="SpatialGate" parent="." instance=ExtResource("3_sg")]
+position = Vector2(905, 410)
+requires_frequency_switch = true
+permanent_when_puzzle_solved = false
+
+[node name="Anchor2" parent="." instance=ExtResource("2_rn")]
+position = Vector2(1085, 410)
+switch_type = 2
+anchor_id = "anchor_2"
+
+[node name="ExitSeal" parent="." instance=ExtResource("3_sg")]
+position = Vector2(1225, 410)
+permanent_when_puzzle_solved = true
+
+[node name="ExitLedge" type="StaticBody2D" parent="."]
+position = Vector2(1495, 475)
+script = ExtResource("6_ro")
+object_mode = 0
+size = Vector2(320, 160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitLedge"]
+shape = SubResource("RectangleShape2D_exit4")
+
+[node name="Checkpoint3" parent="." instance=ExtResource("4_cp")]
+position = Vector2(1480, 395)
+checkpoint_id = "cp_area_4"
+area_id = 4

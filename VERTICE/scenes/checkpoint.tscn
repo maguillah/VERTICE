@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/checkpoint.gd" id="1_cp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cp"]
+size = Vector2(44, 72)
+
+[node name="Checkpoint" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_cp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -36)
+shape = SubResource("RectangleShape2D_cp")
+
+[node name="PillarPoly" type="Polygon2D" parent="."]
+color = Color(0.11, 0.13, 0.16, 1)
+polygon = PackedVector2Array(-6, 0, 6, 0, 4, -56, -4, -56)
+
+[node name="OrbPoly" type="Polygon2D" parent="."]
+position = Vector2(0, -64)
+color = Color(0.95, 0.64, 0.24, 1)
+polygon = PackedVector2Array(-5, 0, 0, -6, 5, 0, 0, 6)
+
+[node name="LanternLight" type="PointLight2D" parent="."]
+position = Vector2(0, -64)
+color = Color(0.96, 0.62, 0.22, 1)
+energy = 0.5
+texture_scale = 3.2
