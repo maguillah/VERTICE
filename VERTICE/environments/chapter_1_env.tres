@@ -3,11 +3,11 @@
 [resource]
 background_mode = 3
 tonemap_mode = 3
-tonemap_exposure = 1.06
+tonemap_exposure = 1.16
 glow_enabled = true
 glow_intensity = 0.38
 glow_strength = 0.55
 glow_bloom = 0.12
 adjustment_enabled = true
-adjustment_contrast = 1.08
-adjustment_saturation = 0.92
+adjustment_contrast = 1.04
+adjustment_saturation = 1.02
