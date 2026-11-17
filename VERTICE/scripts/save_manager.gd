@@ -23,7 +23,15 @@ var data: Dictionary = {
 	"master_volume": 0.85,
 	"muted": false,
 	"touch_sensitivity": 1.0,
-	"quality": 1
+	"quality": 1,
+    "touch_layout": {
+        "joystick": {"x": 0.19, "y": 0.78, "size": 180.0},
+        "jump": {"x": 0.83, "y": 0.77, "size": 110.0},
+        "interact": {"x": 0.70, "y": 0.87, "size": 84.0},
+        "present": {"x": 0.69, "y": 0.68, "size": 72.0},
+        "echo": {"x": 0.81, "y": 0.63, "size": 72.0},
+        "ruptura": {"x": 0.92, "y": 0.70, "size": 72.0}
+    }
 }
 
 func _ready() -> void:
@@ -78,6 +86,21 @@ func save_settings(volume: float, muted: bool, sensitivity: float, quality: int)
 	data["touch_sensitivity"] = clampf(sensitivity, 0.5, 2.0)
 	data["quality"] = clampi(quality, 0, 2)
 	_write_file()
+
+func save_touch_layout(layout: Dictionary) -> void:
+    data["touch_layout"] = layout.duplicate(true)
+    _write_file()
+
+func reset_touch_layout() -> void:
+    data["touch_layout"] = {
+        "joystick": {"x": 0.19, "y": 0.78, "size": 180.0},
+        "jump": {"x": 0.83, "y": 0.77, "size": 110.0},
+        "interact": {"x": 0.70, "y": 0.87, "size": 84.0},
+        "present": {"x": 0.69, "y": 0.68, "size": 72.0},
+        "echo": {"x": 0.81, "y": 0.63, "size": 72.0},
+        "ruptura": {"x": 0.92, "y": 0.70, "size": 72.0}
+    }
+    _write_file()
 
 func reset_progress() -> void:
 	data["has_save"] = false
