@@ -13,6 +13,7 @@ const DARK := Color("#0b1119")
 
 func _draw() -> void:
 	_draw_horizon()
+	_draw_industrial_pipes()
 	match area_id:
 		1:
 			_draw_silence()
@@ -41,6 +42,125 @@ func _draw_horizon() -> void:
 		]), FAR)
 		draw_line(Vector2(x + 12, 570 - h),
 			Vector2(x + w * 0.5, 570 - h - 28), MID, 2.0)
+
+
+func _draw_industrial_pipes() -> void:
+	match area_id:
+		1:
+			_draw_pipe(PackedVector2Array([
+				Vector2(-40, 158), Vector2(420, 158),
+				Vector2(455, 180), Vector2(455, 225)
+			]), 19.0, Color("#52636b"))
+			_draw_pipe(PackedVector2Array([
+				Vector2(455, 225), Vector2(455, 255),
+				Vector2(920, 255), Vector2(955, 230),
+				Vector2(955, 180), Vector2(1580, 180)
+			]), 15.0, Color("#465962"))
+			_draw_pipe_flange(Vector2(455, 225), 13.0)
+			_draw_pipe_flange(Vector2(955, 230), 12.0)
+			_draw_pipe_flange(Vector2(250, 158), 11.0)
+			_draw_pipe_flange(Vector2(1250, 180), 11.0)
+
+		2:
+			_draw_pipe(PackedVector2Array([
+				Vector2(-30, 145), Vector2(300, 145),
+				Vector2(330, 175), Vector2(330, 235),
+				Vector2(1180, 235), Vector2(1210, 205),
+				Vector2(1210, 145), Vector2(1580, 145)
+			]), 23.0, Color("#59676b"))
+			_draw_pipe(PackedVector2Array([
+				Vector2(-20, 390), Vector2(250, 390),
+				Vector2(280, 365), Vector2(280, 330)
+			]), 12.0, Color("#354a55"))
+			_draw_pipe(PackedVector2Array([
+				Vector2(1080, 330), Vector2(1080, 390),
+				Vector2(1110, 415), Vector2(1580, 415)
+			]), 13.0, Color("#354a55"))
+			for pos in [Vector2(330, 235), Vector2(1210, 205),
+					Vector2(280, 365), Vector2(1080, 390)]:
+				_draw_pipe_flange(pos, 13.0)
+
+		3:
+			_draw_pipe(PackedVector2Array([
+				Vector2(-30, 175), Vector2(360, 175),
+				Vector2(395, 205), Vector2(395, 260)
+			]), 11.0, Color("#49636a"))
+			_draw_pipe(PackedVector2Array([
+				Vector2(395, 260), Vector2(1120, 260),
+				Vector2(1150, 230), Vector2(1150, 175),
+				Vector2(1580, 175)
+			]), 11.0, Color("#49636a"))
+			_draw_pipe(PackedVector2Array([
+				Vector2(80, 440), Vector2(520, 440),
+				Vector2(550, 415), Vector2(550, 380)
+			]), 7.0, Color("#3d5963"))
+			_draw_pipe_flange(Vector2(395, 260), 9.0)
+			_draw_pipe_flange(Vector2(1150, 230), 9.0)
+
+		4:
+			_draw_pipe(PackedVector2Array([
+				Vector2(-30, 165), Vector2(390, 165),
+				Vector2(420, 195), Vector2(450, 245),
+				Vector2(900, 245), Vector2(930, 215),
+				Vector2(970, 165), Vector2(1580, 165)
+			]), 18.0, Color("#515b64"))
+			_draw_pipe(PackedVector2Array([
+				Vector2(-20, 430), Vector2(350, 430),
+				Vector2(390, 400), Vector2(420, 350)
+			]), 10.0, Color("#394a56"))
+			_draw_pipe(PackedVector2Array([
+				Vector2(1120, 350), Vector2(1160, 395),
+				Vector2(1200, 430), Vector2(1580, 430)
+			]), 10.0, Color("#394a56"))
+			_draw_pipe_flange(Vector2(450, 245), 12.0)
+			_draw_pipe_flange(Vector2(930, 215), 12.0)
+
+		5:
+			_draw_pipe(PackedVector2Array([
+				Vector2(-30, 135), Vector2(250, 135),
+				Vector2(285, 165), Vector2(285, 215),
+				Vector2(1380, 215), Vector2(1415, 180),
+				Vector2(1415, 135), Vector2(1580, 135)
+			]), 21.0, Color("#625b50"))
+			_draw_pipe(PackedVector2Array([
+				Vector2(-20, 470), Vector2(450, 470),
+				Vector2(490, 435), Vector2(490, 390)
+			]), 12.0, Color("#4a555b"))
+			_draw_pipe(PackedVector2Array([
+				Vector2(1190, 390), Vector2(1190, 435),
+				Vector2(1230, 470), Vector2(1580, 470)
+			]), 12.0, Color("#4a555b"))
+			_draw_pipe_flange(Vector2(285, 215), 13.0)
+			_draw_pipe_flange(Vector2(1415, 180), 13.0)
+
+
+func _draw_pipe(points: PackedVector2Array, width: float, tint: Color) -> void:
+	if points.size() < 2:
+		return
+
+	draw_polyline(points, Color("#080f15", 0.88), width + 8.0, true)
+	draw_polyline(points, Color("#101c24", 0.96), width + 3.0, true)
+	draw_polyline(points, tint, width, true)
+
+	var highlight := PackedVector2Array()
+	for point in points:
+		highlight.append(point + Vector2(0, -width * 0.22))
+
+	draw_polyline(highlight, Color("#c0c9c3", 0.42), 2.0, true)
+
+
+func _draw_pipe_flange(pos: Vector2, radius: float) -> void:
+	draw_circle(pos, radius + 4.0, Color("#101820"))
+	draw_circle(pos, radius, Color("#52636b"))
+	draw_arc(pos, radius - 2.0, 0.0, TAU, 32,
+			Color("#aeb9b4", 0.62), 1.5)
+	draw_circle(pos, radius * 0.38, Color("#1a2931"))
+
+	for i in range(4):
+		var angle := TAU * float(i) / 4.0
+		var bolt_pos := pos + Vector2(cos(angle), sin(angle)) * radius * 0.72
+		draw_circle(bolt_pos, 2.0, Color("#101820"))
+		draw_circle(bolt_pos, 1.0, Color("#c1b18d"))
 
 func _draw_silence() -> void:
 	_pillar(250, 600, 70, 310)
