@@ -73,6 +73,7 @@ jobs:
           mkdir -p VERTICE/android/build
           ./Godot_v4.3-stable_linux.x86_64 \
             --headless --path VERTICE \
+            --install-android-build-template \
             --export-debug "Android" \
             android/build/VERTICE_Capitulo1_a_6.apk
 
