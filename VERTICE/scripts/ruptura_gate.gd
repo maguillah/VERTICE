@@ -20,10 +20,21 @@ func _ready() -> void:
 	_evaluate_open(ResonanceSystem.current_state)
 	if _is_open:
 		position = _closed_pos + open_offset
+	_sync_motion()
 
 func _process(delta: float) -> void:
 	var target := _closed_pos + open_offset if _is_open else _closed_pos
+	var previous := position
 	position = position.lerp(target, clampf(5.5 * delta, 0.0, 1.0))
+	if position.distance_squared_to(target) <= 0.25:
+		position = target
+		set_process(false)
+	if not position.is_equal_approx(previous):
+		queue_redraw()
+
+func _sync_motion() -> void:
+	var target := _closed_pos + open_offset if _is_open else _closed_pos
+	set_process(position.distance_squared_to(target) > 0.25)
 	queue_redraw()
 
 func _draw() -> void:
@@ -51,6 +62,7 @@ func _evaluate_open(state_id: int) -> void:
 		_is_open = false
 	if collision_shape:
 		collision_shape.set_deferred("disabled", _is_open)
+	_sync_motion()
 
 func _on_state_changed(new_state: int, _prev: int) -> void:
 	_evaluate_open(new_state)
@@ -63,6 +75,7 @@ func _on_puzzle_updated(count: int, total: int) -> void:
 		_is_open = true
 		if collision_shape:
 			collision_shape.set_deferred("disabled", true)
+		_sync_motion()
 
 func would_block_rect_in_state(world_rect: Rect2, target_state: int) -> bool:
 	var will_open := false

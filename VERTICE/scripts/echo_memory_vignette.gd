@@ -55,6 +55,8 @@ func _refresh_visibility(state_id: int) -> void:
 	if _figure_poly:
 		var is_echo := state_id == ResonanceSystem.State.ECO
 		_figure_poly.color.a = (0.42 if _discovered else 0.72) if is_echo else 0.05
+		set_process(is_echo)
+		queue_redraw()
 
 func _on_body_entered(body: Node) -> void:
 	if body is PlayerController and not _discovered and ResonanceSystem.current_state == ResonanceSystem.State.ECO:

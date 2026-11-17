@@ -16,6 +16,15 @@ func _ready() -> void:
 	col.position = Vector2(0.0, -hazard_size.y * 0.5)
 	add_child(col)
 	body_entered.connect(_on_body_entered)
+	ResonanceSystem.state_changed.connect(_on_state_changed)
+	_refresh_animation(ResonanceSystem.current_state)
+
+func _on_state_changed(new_state: int, _previous_state: int) -> void:
+	_refresh_animation(new_state)
+
+func _refresh_animation(state_id: int) -> void:
+	set_process(not is_ruptura_surge or state_id != ResonanceSystem.State.RUPTURA)
+	queue_redraw()
 
 func _process(delta: float) -> void:
 	_t += delta

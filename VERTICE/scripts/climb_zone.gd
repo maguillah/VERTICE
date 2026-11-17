@@ -18,6 +18,7 @@ func _ready() -> void:
 	add_child(col)
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	set_process(is_rope)
 
 func _process(delta: float) -> void:
 	_t += delta
