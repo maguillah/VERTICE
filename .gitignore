@@ -16,3 +16,4 @@ android/build/
 *.keystore
 *.jks
 debug.keystore
+.gitignore.backup.*
