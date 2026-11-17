@@ -32,7 +32,7 @@ initial_velocity_max = 16.0
 environment = ExtResource("1_env")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.92, 0.94, 0.95, 1)
+color = Color(0.76, 0.80, 0.86, 1)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -44,21 +44,21 @@ offset_left = -800.0
 offset_top = -600.0
 offset_right = 8800.0
 offset_bottom = 1200.0
-color = Color(0.105, 0.135, 0.15, 1)
+color = Color(0.0235, 0.0275, 0.0353, 1)
 
 [node name="Monolith1" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
-color = Color(0.19, 0.23, 0.24, 1)
+color = Color(0.038, 0.045, 0.06, 1)
 polygon = PackedVector2Array(260, -200, 390, -200, 390, 900, 260, 900)
 
 [node name="Monolith2" type="Polygon2D" parent="ParallaxBackground/FarAtmosphere"]
-color = Color(0.16, 0.20, 0.22, 1)
+color = Color(0.035, 0.042, 0.056, 1)
 polygon = PackedVector2Array(1240, -260, 1460, -260, 1460, 900, 1240, 900)
 
 [node name="MidArchitecture" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.45, 0.25)
 
 [node name="ArchBridge" type="Polygon2D" parent="ParallaxBackground/MidArchitecture"]
-color = Color(0.27, 0.32, 0.33, 0.94)
+color = Color(0.052, 0.062, 0.082, 0.88)
 polygon = PackedVector2Array(700, 80, 1850, 80, 1850, 130, 700, 130)
 
 [node name="FogLayer" type="ColorRect" parent="ParallaxBackground/MidArchitecture"]

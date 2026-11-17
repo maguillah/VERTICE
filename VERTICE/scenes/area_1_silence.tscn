@@ -20,7 +20,7 @@ size = Vector2(430, 290)
 [node name="Area1_Silence" type="Node2D"]
 
 [node name="Area1Visuals" type="Node2D" parent="."]
-z_index = 0
+z_index = -5
 script = ExtResource("4_visuals")
 area_id = 1
 

@@ -24,7 +24,7 @@ size = Vector2(240, 22)
 [node name="Area2_Vestige" type="Node2D"]
 
 [node name="ChapterVisuals" type="Node2D" parent="."]
-z_index = 0
+z_index = -10
 script = ExtResource("chapter_visuals")
 area_id = 2
 

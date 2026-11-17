@@ -29,7 +29,7 @@ size = Vector2(320, 160)
 [node name="Area4_Distortion" type="Node2D"]
 
 [node name="ChapterVisuals" type="Node2D" parent="."]
-z_index = 0
+z_index = -10
 script = ExtResource("chapter_visuals")
 area_id = 4
 

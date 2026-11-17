@@ -4,8 +4,8 @@
 
 [resource]
 shader = ExtResource("1_fog")
-shader_parameter/fog_color = Color(0.28, 0.32, 0.34, 0.22)
+shader_parameter/fog_color = Color(0.14, 0.16, 0.2, 0.36)
 shader_parameter/resonance_tint = Color(0.898, 0.596, 0.22, 0.18)
 shader_parameter/resonance_mix = 0.0
 shader_parameter/drift_speed = 0.025
-shader_parameter/density = 0.32
+shader_parameter/density = 0.58
